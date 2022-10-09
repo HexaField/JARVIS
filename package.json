@@ -1,0 +1,16 @@
+{
+  "name": "JARVIS",
+  "version": "0.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {},
+  "peerDependencies": {},
+  "dependencies": {
+    "deepspeech": "0.9.3"
+  },
+  "devDependencies": {
+    "mocha": "10.0.0",
+    "trace-unhandled": "2.0.1"
+  },
+  "license": "ISC"
+}
