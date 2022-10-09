@@ -110,3 +110,7 @@ dist/
 .history/
 
 index.ts.bak
+
+
+stt/*.scorer
+stt/*.tflite
