@@ -27,7 +27,7 @@ export default async function SSTSystem(world: World) {
         connected = true
         console.log({ connected })
         // producer
-        producer.addListener('trace')
+        // producer.addListener('trace')
       }
     }
 
