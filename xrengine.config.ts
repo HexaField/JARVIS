@@ -3,9 +3,7 @@ import type { ProjectConfigInterface } from '@xrengine/projects/ProjectConfigInt
 const config: ProjectConfigInterface = {
   onEvent: './projectEventHooks.ts',
   thumbnail: '/static/etherealengine.png',
-  routes: {
-    '/jarvis': { component: () => import('./client/index'), props: { exact: true } }
-  },
+  routes: {},
   services: './server/services/services.ts',
   databaseSeed: undefined
 }
