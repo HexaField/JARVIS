@@ -15,9 +15,7 @@ const ffmpegCommands = [
   '-fflags',
   '+genpts',
   '-f',
-  '-bitexact',
-  'wav',
-  '-acodec', 'pcm_s16le', '-ar', '22050', '-ac', '1',
+  'sdp', // todo figure out output codec
   '-i',
   'pipe:0'
 ]
