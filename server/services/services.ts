@@ -52,6 +52,8 @@ async function JARVIS (app: Application) {
   }
 
   await initSystems(Engine.instance.currentWorld, systems)
+
+  SpeechToText(app)
 }
 
-export default [JARVIS, SpeechToText]
+export default [JARVIS]
