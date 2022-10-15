@@ -1,7 +1,9 @@
 import { World } from "@xrengine/engine/src/ecs/classes/World"
 import { Consumer, Producer  } from 'mediasoup/node/lib/types'
+import { ffmpeg } from "./ffmpeg"
 
 export default async function SSTSystem(world: World) {
+
 
   let connected = false
   let accumulator = 0
@@ -22,18 +24,11 @@ export default async function SSTSystem(world: World) {
       (c: any) => c.appData.mediaTag === 'cam-audio'
     ) as Producer[]
     for (const producer of audioProducers) {
-      console.log(producer)
       if (!connected) {
         connected = true
-        console.log({ connected })
-        // producer
-        // producer.addListener('trace')
+        ffmpeg(producer)
       }
     }
-
-
-
-
   }
 
   const cleanup = async () => {

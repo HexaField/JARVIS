@@ -11,6 +11,7 @@ Using https://github.com/MainRo/deepspeech-server
 
 ```
 pip3 install deepspeech-server
+sudo apt install ffmpeg
 ```
 
 if it complains about not having pip3.8 installed do
