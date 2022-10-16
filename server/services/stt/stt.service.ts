@@ -41,27 +41,27 @@ export const speechToTextRequest = (app: Application) => {
 export function SpeechToText(app: Application) {
   if (app.serverMode !== ServerMode.Analytics || config.db.forceRefresh) return
 
-  const deepspeech = spawn('deepspeech-server', ['--config', 'config.yaml'], {
-    cwd: path.resolve(__dirname, '../../../stt'),
-    shell: true,
-    stdio: 'inherit'
-  })
+  // const deepspeech = spawn('deepspeech-server', ['--config', 'config.yaml'], {
+  //   cwd: path.resolve(__dirname, '../../../stt'),
+  //   shell: true,
+  //   stdio: 'inherit'
+  // })
 
-  deepspeech.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-  })
+  // deepspeech.on('close', (code) => {
+  //   console.log(`child process exited with code ${code}`);
+  // })
 
-  app.use(
-    'speech-to-text',
-    multipartMiddleware.any(),
-    (req: express.Request, res: express.Response, next: express.NextFunction) => {
-      if (req?.feathers && req.method !== 'GET') {
-        ; (req as any).feathers.files = (req as any).files.media ? (req as any).files.media : (req as any).files
-      }
-      next()
-    },
-    {
-      create: speechToTextRequest(app)
-    }
-  )
+  // app.use(
+  //   'speech-to-text',
+  //   multipartMiddleware.any(),
+  //   (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  //     if (req?.feathers && req.method !== 'GET') {
+  //       ; (req as any).feathers.files = (req as any).files.media ? (req as any).files.media : (req as any).files
+  //     }
+  //     next()
+  //   },
+  //   {
+  //     create: speechToTextRequest(app)
+  //   }
+  // )
 }

@@ -6,7 +6,8 @@
   "scripts": {},
   "peerDependencies": {},
   "dependencies": {
-    "deepspeech": "0.9.3"
+    "deepspeech": "0.9.3",
+    "stt": "^1.4.0"
   },
   "devDependencies": {
     "mocha": "10.0.0",

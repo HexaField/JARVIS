@@ -6,6 +6,8 @@ import { Consumer, Producer } from 'mediasoup/node/lib/types'
 import axios from 'axios'
 import fs from 'fs'
 import config from '@xrengine/server-core/src/appconfig'
+import { Model } from 'stt'
+import path from 'path'
 
 const ffmpegCommands = [
   '-loglevel',
@@ -26,7 +28,7 @@ const ffmpegAudioCommands = [
   // '-strict', // libvorbis is experimental
   // '-2',
   '-c:a',
-  'pcm_s24le'
+  'pcm_s24le' //'copy'
 ]
 
 const ffmpegVideoCommands = [
@@ -35,6 +37,12 @@ const ffmpegVideoCommands = [
   '-c:v',
   'copy'
 ]
+
+console.log(__dirname, path.resolve(__dirname, '../../../stt/model.tflite'), path.resolve(__dirname, '../../../stt/large_vocabulary.scorer'))
+const modelFile = path.resolve(__dirname, '../../../stt/model.tflite')
+const scorerFile = path.resolve(__dirname, '../../../stt/large_vocabulary.scorer')
+const model = new Model(modelFile)
+model.enableExternalScorer(scorerFile)
 
 export const ffmpeg = async (producer: Producer) => {
 
@@ -95,21 +103,25 @@ export const ffmpeg = async (producer: Producer) => {
 
     setTimeout(async () => {
       console.log('ending')
-      sdpStream.unpipe(ffmpeg.stdin)
-      ffmpeg.kill()
-      sdpStream.destroy()
+      // const buffers = [] as any[]
 
-      const result = await axios.post<string>(
-        `http://${config.server.hostname}:8080/stt`,
-        fs.createReadStream(outDir),
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        }
-      )
+      setTimeout(() => {
+        sdpStream.pause()
+        sdpStream.unpipe(ffmpeg.stdin)
+        sdpStream.destroy()
+        ffmpeg.kill()
+      }, 5000)
 
-      console.log(result)
+      // // node.js readable streams implement the async iterator protocol
+      // for await (const data of sdpStream) {
+      //   buffers.push(data)
+      // }
+
+      // const finalBuffer = Buffer.concat(buffers)
+      // console.log(finalBuffer)
+      // const result = model.stt(finalBuffer)
+      const result = model.stt(fs.readFileSync(outDir))
+      console.log('\n\n\nSTT result:', result, '\n\n\n')
     }, 5000)
 
 
@@ -160,3 +172,5 @@ const getCodecInfoFromRtpParameters = (kind, rtpParameters) => {
     channels: kind === 'audio' ? rtpParameters.codecs[0].channels : undefined
   };
 };
+
+

@@ -25,12 +25,14 @@ export const jarvisRequest = (app: Application) => {
 }
 
 async function JARVIS (app: Application) {
+  if (config.db.forceRefresh) return
+
   console.log('JARVIS', process.env.JARVIS)
   if (process.env.JARVIS !== 'true') return
   app.use('jarvis-request', {
     get: jarvisRequest(app)
   })
-
+  
   const systems = [] as SystemModuleType<any>[]
 
   systems.push(
