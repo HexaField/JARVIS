@@ -4,7 +4,9 @@ import { initSystems, SystemModuleType } from "@xrengine/engine/src/ecs/function
 import { SystemUpdateType } from "@xrengine/engine/src/ecs/functions/SystemUpdateType"
 import { Application, ServerMode } from "@xrengine/server-core/declarations"
 import config from "@xrengine/server-core/src/appconfig"
+import JARVISSystem from "./JARVIS"
 import { SpeechToText } from "./stt/stt.service"
+import STTSystem from "./stt/STTSystem"
 
 declare module '@xrengine/common/declarations' {
   interface ServiceTypes {
@@ -39,7 +41,7 @@ async function JARVIS (app: Application) {
     {
       uuid: 'JARVIS',
       type: SystemUpdateType.FIXED,
-      systemLoader: () => import('./JARVIS')
+      systemLoader: () => Promise.resolve({ default: JARVISSystem })
     }
   )
 
@@ -48,7 +50,7 @@ async function JARVIS (app: Application) {
       {
         uuid: 'JARVIS',
         type: SystemUpdateType.FIXED,
-        systemLoader: () => import('./stt/STTSystem')
+        systemLoader: () => Promise.resolve({ default: STTSystem })
       }
     )
   }

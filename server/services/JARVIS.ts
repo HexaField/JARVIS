@@ -1,6 +1,6 @@
 import { World } from "@xrengine/engine/src/ecs/classes/World"
 
-export default async function JARVIS(world: World) {
+export default async function JARVISSystem(world: World) {
 
   const execute = () => {
 
